@@ -6,5 +6,8 @@ public interface AddressBook {
 	void addContact();
 	void editContact();
 	void deleteContact();
+	void displayBook();
+	void addToBook();
+	void operation();
 	void display();
 }
