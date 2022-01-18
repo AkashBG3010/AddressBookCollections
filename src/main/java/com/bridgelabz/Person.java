@@ -3,6 +3,7 @@ package com.bridgelabz;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Person implements AddressBook {
 	
@@ -90,29 +91,82 @@ public class Person implements AddressBook {
     	else {
     		System.out.println("Book already exists!");
     	}
-}
-public void operation() {
-	System.out.println("Enter how many address books you want to add");
-	int noOfAddressBook = sc.nextInt();
-	while(noOfAddressBook > 0) {
-		addContact();
-		addToBook();
-		noOfAddressBook--;
-	}
-}
-public void displayBook() {
-	System.out.println("Address Books are:");
-	for(Map.Entry e : book.entrySet()) {
-    	System.out.println(e.getKey()+"--> "+e.getValue());
     }
-}
-public void searchPerson() {
-	System.out.println("Enter person name to search ");
-	String name = sc.next();
-	for(Map.Entry e : detailsBook.entrySet()) {
-    	if(detailsBook.get(name).equals(e.getValue())) {
-    		System.out.println(e.getValue());
+    public void operation() {
+    	System.out.println("Enter how many address books you want to add");
+    	int noOfAddressBook = sc.nextInt();
+    	while(noOfAddressBook > 0) {
+    		addContact();
+    		addToBook();
+    		noOfAddressBook--;
     	}
-	}
-}
+    }
+    public void displayBook() {
+    	System.out.println("Address Books are:");
+    	for(Map.Entry e : book.entrySet()) {
+        	System.out.println(e.getKey()+"--> "+e.getValue());
+        }
+    }
+    public void searchPerson() {
+    	System.out.println("Enter person name to search ");
+    	String name = sc.next();
+    	for(Map.Entry e : detailsBook.entrySet()) {
+        	if(detailsBook.get(name).equals(e.getValue())) {
+        		System.out.println(e.getValue());
+        	}
+    	}
+    }
+    public void addContactByCity()  {
+    	System.out.println("Enter how many contacts you want to add");
+    	int numOfContacts = sc.nextInt();
+    	while(numOfContacts > 0) {
+        	System.out.println("Enter Name of city");
+    		String cityName = sc.next();
+        	if(personByCity.containsKey(cityName)) {
+        		System.out.println("Contact already exists!");
+        		return;
+        	}
+        	else {
+        		infoContact.info();
+        		personByCity.put(city,new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email));
+        		numOfContacts--;
+        	}
+    	}
+    	System.out.println(personByCity);
+    }
+    public void addContactByState()  {
+    	System.out.println("Enter how many contacts you want to add");
+    	int numOfContacts = sc.nextInt();
+    	while(numOfContacts > 0) {
+        	System.out.println("Enter Name of city");
+    		String stateName = sc.next();
+        	if(personByState.containsKey(stateName)) {
+        		System.out.println("Contact already exists!");
+        		return;
+        	}
+        	else {
+        		infoContact.info();
+        		personByState.put(state,new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email));
+        		numOfContacts--;
+        	}
+    	}
+    }
+    public void viewByCity() {
+    Map<String,Contact> detailsByCity =personByCity.entrySet().stream().filter(e->e.getKey().equals("Pune")).collect(Collectors.toMap(e->e.getKey(), e->e.getValue()));
+    if(detailsByCity!=null) {
+    System.out.println(detailsByCity);
+    }
+    else {
+    	System.out.println("Person having particular city is not present");
+    }
+    }
+    public void viewByState() {
+    	Map<String,Contact> detailsByState =personByState.entrySet().stream().filter(e->e.getKey().equals("Karnataka")).collect(Collectors.toMap(e->e.getKey(), e->e.getValue()));
+    	if(detailsByState!=null) {
+        System.out.println(detailsByState);
+    	}
+    	else {
+    		System.out.println("Person with particular state is not present");
+    	}
+    }
 }

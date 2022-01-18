@@ -11,4 +11,8 @@ public interface AddressBook {
 	void operation();
 	void display();
 	void searchPerson();
+	void addContactByCity();
+	void viewByCity();
+	void addContactByState();
+	void viewByState();
 }
