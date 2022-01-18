@@ -111,11 +111,8 @@ public class Person implements AddressBook {
     public void searchPerson() {
     	System.out.println("Enter person name to search ");
     	String name = sc.next();
-    	for(Map.Entry e : detailsBook.entrySet()) {
-        	if(detailsBook.get(name).equals(e.getValue())) {
-        		System.out.println(e.getValue());
-        	}
-    	}
+    	Map<String,Contact> searchedPerson =detailsBook.entrySet().stream().filter(e->e.getKey().equals(name)).collect(Collectors.toMap(e->e.getKey(), e->e.getValue()));
+		System.out.println(searchedPerson);
     }
     public void addContactByCity()  {
     	System.out.println("Enter how many contacts you want to add");
@@ -153,16 +150,21 @@ public class Person implements AddressBook {
     	}
     }
     public void viewByCity() {
-    Map<String,Contact> detailsByCity =personByCity.entrySet().stream().filter(e->e.getKey().equals("Pune")).collect(Collectors.toMap(e->e.getKey(), e->e.getValue()));
-    if(detailsByCity!=null) {
-    System.out.println(detailsByCity);
-    System.out.println("Number of person belonging to city is: "+detailsByCity.size());
+    	System.out.println("Enter city name to search ");
+    	String cityName = sc.next();
+    	Map<String,Contact> detailsByCity =personByCity.entrySet().stream().filter(e->e.getKey().equals("Pune")).collect(Collectors.toMap(e->e.getKey(), e->e.getValue()));
+        if(detailsByCity!=null) {
+        System.out.println(detailsByCity);
+        System.out.println("Number of person belonging to city is: "+detailsByCity.size());
+        }
+        else {
+        	System.out.println("Person having particular city is not present");
+        }
     }
-    else {
-    	System.out.println("Person having particular city is not present");
-    }
-    }
+    
     public void viewByState() {
+    	System.out.println("Enter State name to search ");
+    	String stateName = sc.next();
     	Map<String,Contact> detailsByState =personByState.entrySet().stream().filter(e->e.getKey().equals("Karnataka")).collect(Collectors.toMap(e->e.getKey(), e->e.getValue()));
     	if(detailsByState!=null) {
         System.out.println(detailsByState);
@@ -178,6 +180,22 @@ public class Person implements AddressBook {
 				      						.sorted(Map.Entry.comparingByKey()).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue
 				      							,(oldValue,newValue)->oldValue,LinkedHashMap::new));
 		System.out.println("Sorted Address Book "+sortedContact);
+
+	}
+    public void sortByCity() {
+
+		Map<String,Contact> sortedByCity =personByCity.entrySet().stream()
+				      						.sorted(Map.Entry.comparingByKey()).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue
+				      							,(oldValue,newValue)->oldValue,LinkedHashMap::new));
+		System.out.println("Sorted Address Book "+sortedByCity);
+
+	}
+    public void sortByState() {
+
+		Map<String,Contact> sortedByState =personByState.entrySet().stream()
+				      						.sorted(Map.Entry.comparingByKey()).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue
+				      							,(oldValue,newValue)->oldValue,LinkedHashMap::new));
+		System.out.println("Sorted Address Book "+sortedByState);
 
 	}
 }

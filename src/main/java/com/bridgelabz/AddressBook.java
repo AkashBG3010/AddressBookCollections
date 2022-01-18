@@ -16,4 +16,6 @@ public interface AddressBook {
 	void addContactByState();
 	void viewByState();
 	void sortAddressBook();
+	void sortByCity();
+	void sortByState();
 }
