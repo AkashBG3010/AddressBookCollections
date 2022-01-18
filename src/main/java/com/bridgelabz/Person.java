@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class Person implements AddressBook {
     Contact contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
     Map<String,Contact> detailsBook = new HashMap<>();
     static Map<String,Contact> personByCity = new HashMap<>();
-    Map<String,Contact> personByState = new HashMap<>();
+    static Map<String,Contact> personByState = new HashMap<>();
 	static Map<String,Map<String,Contact>> book = new HashMap<>();
 
 	public void createContact() {
@@ -171,4 +172,12 @@ public class Person implements AddressBook {
     		System.out.println("Person with particular state is not present");
     	}
     }
+    public void sortAddressBook() {
+
+		Map<String,Contact> sortedContact =detailsBook.entrySet().stream()
+				      						.sorted(Map.Entry.comparingByKey()).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue
+				      							,(oldValue,newValue)->oldValue,LinkedHashMap::new));
+		System.out.println("Sorted Address Book "+sortedContact);
+
+	}
 }
