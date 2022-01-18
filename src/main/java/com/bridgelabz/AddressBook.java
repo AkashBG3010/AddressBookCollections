@@ -10,4 +10,5 @@ public interface AddressBook {
 	void addToBook();
 	void operation();
 	void display();
+	void searchPerson();
 }
