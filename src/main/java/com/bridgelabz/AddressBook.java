@@ -1,5 +1,7 @@
 package com.bridgelabz;
 
+import java.util.List;
+
 public interface AddressBook {
 
 	void createContact();
@@ -18,4 +20,6 @@ public interface AddressBook {
 	void sortAddressBook();
 	void sortByCity();
 	void sortByState();
+	void writeToAddressBookFile();
+	public List<String> readDataFromFile();
 }
