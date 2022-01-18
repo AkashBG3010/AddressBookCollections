@@ -1,19 +1,22 @@
 package com.bridgelabz;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -287,6 +290,41 @@ public class Person implements AddressBook {
                 System.out.println("Phone Number = " + nextRecord[4]);
                 System.out.println("Zip Code = " + nextRecord[6]);
                 System.out.println("\n");
+            }
+        }
+    }
+    @Override
+	public void writeDataToJson() throws IOException {
+
+		String fileName = "./PersonContacts.json";
+		Path filePath = Paths.get(fileName);
+		Gson gson = new Gson();
+		String json = gson.toJson(detailsBook.values());
+		FileWriter writer = new FileWriter(String.valueOf(filePath));
+		writer.write(json);
+		writer.close();
+
+	}
+    @Override
+    public void readDataFromJson() throws IOException {
+
+        ArrayList<Contact> contactList;
+        String fileName = "./PersonContacts.json";
+        Path filePath = Paths.get(fileName);
+
+        try (Reader reader = Files.newBufferedReader(filePath)) {
+            Gson gson = new Gson();
+            contactList = new ArrayList<>(Arrays.asList(gson.fromJson(reader, Contact[].class)));
+            for (Contact contact : contactList) {
+            	System.out.println("{");
+                System.out.println("Firstname : " + contact.getFirstName());
+                System.out.println("Lastname : " + contact.getLastName());
+                System.out.println("City : " + contact.getCity());
+                System.out.println("State : " + contact.getState());
+                System.out.println("Zip Code : " + contact.getZip());
+                System.out.println("Phone number : " + contact.getPhoneNumber());
+                System.out.println("Email : " + contact.getEmail());
+                System.out.println("}\n");
             }
         }
     }
